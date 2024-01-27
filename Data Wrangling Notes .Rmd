@@ -1,0 +1,118 @@
+---
+title: "Data Wrangling Notes"
+author: "Claire Brandes"
+date: "2024-01-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(error = TRUE)
+```
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+## Loading in practice data
+```{r}
+d <- read_csv("data-wrangling.csv", col_names = TRUE)
+```
+
+#### Note: read.csv function in base R, read_csv function in tidyverse with more features
+
+## Building scientific name from two columns in data frame
+
+```{r}
+sciname <- paste(d$Genus, d$Species, sep = " ")
+```
+
+#### Another method of doing the same thing
+
+```{r}
+sciname <- paste0(d$Genus, " ", d$Species)
+```
+
+## Make everything in sciname uppercase
+
+```{r}
+sciname <- toupper(sciname)
+```
+
+## Pull out all of the unique genera in data set
+
+```{r}
+unique(d$Genus)
+```
+
+#### Another method of doing the same thing
+
+```{r}
+unique(d[["Genus"]])
+```
+
+# Ways to look at data frame
+
+## Give structure of dataframe
+
+```{r}
+glimpse(d)
+```
+
+## Same information, but not as good as tidyverse version
+
+```{r}
+str(d)
+```
+
+## First 6 rows of data frame
+
+```{r}
+head(d)
+```
+
+## Last 6 rows of data frame
+
+```{r}
+tail(d)
+```
+
+## First 10 rows of dataframe
+
+```{r}
+head(d, 10)
+```
+
+# Manipulating data set
+
+```{r}
+gs <- d$MeanGroupSize
+```
+
+## Add 1 to each number in vector
+
+```{r}
+gs + 1
+```
+
+```{r warning=TRUE}
+gs + c(1,2)
+```
+# Extract female mean body mass and brain size, and make a bivariate plot of the relationship between those variables on untransformed and log scale 
+
+## Name variables 
+```{r}
+bm <- d$Body_mass_female_mean
+bs <- d$Brain_Size_Species_Mean
+```
+## Create untransformed plot
+```{r}
+plot(bm,bs)
+```
+## Create transformed plot
+```{r}
+plot(log(bm),log(bs))
+```
+
+
